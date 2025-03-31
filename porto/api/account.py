@@ -28,6 +28,10 @@ def accounts():
             uname = request.form['username']
             pword = request.form['password']
 
+            # guard against docker usage
+            if "PROD" in os.environ.keys():
+                return redirect("/")
+
             # set session cookie
             if not do_login(uname, pword):
                 return redirect("/accounts/login/?badlogin=1")
